@@ -5,16 +5,18 @@ export class EndScene extends Phaser.Scene {
 
     create() {
         // 加载背景
-        this.bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
-        this.bg.setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
+        this.bg = this.add.image(0, 0, 'bg_colour').setOrigin(0, 0);
+        this.bg.setDisplaySize(this.sys.game.config.width*2, this.sys.game.config.height*2);
         
         // 定义滚动文本内容
         const textContent = [
-            "感谢你游玩 Journey to Shanghai！",
-            "希望你喜欢这个游戏。",
-            "游戏中的角色和场景都是精心设计的。",
-            "感谢所有参与制作的人员。",
-            "期待与你再次相遇！"
+            "17岁是个很好的年纪",
+            "祝愿你能继续拥有欢笑，调侃，幽默",
+            "依然可以自在的独处，在值得珍视的人们那里收获爱与温暖",
+            "学业的压力是不可避免的啦",
+            "但这肯定不会是生活中最重要的事情~所以还是要轻松一点的！",
+            "我永远都会陪伴着你的",
+            "来自你的企鹅"
         ];
         
         // 创建文本组
@@ -22,7 +24,7 @@ export class EndScene extends Phaser.Scene {
         
         // 添加文本到组中
         textContent.forEach((text, index) => {
-            const textObject = this.add.text(this.sys.game.config.width / 2, this.sys.game.config.height + index * 100, text, {
+            const textObject = this.add.text(this.sys.game.config.width / 2, this.sys.game.config.height + index * 60, text, {
                 fontSize: '24px',
                 fill: '#ffffff',
                 fontFamily: 'Arial, sans-serif',
@@ -34,8 +36,8 @@ export class EndScene extends Phaser.Scene {
         // 创建滚动动画
         this.tweens.add({
             targets: textGroup.getChildren(),
-            y: '-=800',
-            duration: 10000,
+            y: '-=600',
+            duration: 15000,
             ease: 'Linear',
             repeat: 0
         });

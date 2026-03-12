@@ -230,6 +230,7 @@ export class HerGame extends Phaser.Scene {
                         this.dialogIndex++;
                         if (this.dialogIndex < this.dialogs.length) {
                             // 继续下一个对话
+                            this.isDialogActive = false;
                             this.startDialog();
                         } else {
                             // 对话结束，开始掉落pejoy
@@ -252,17 +253,16 @@ export class HerGame extends Phaser.Scene {
         // 屏幕变暗
         this.cameras.main.fadeOut(1000);
         
-        this.time.delayedCall(2500, () => { // 增加延迟时间，确保背景切换完成
+        this.time.delayedCall(1500, () => {
             // 切换背景为bg
             this.bg.setTexture('bg');
             
             // 屏幕恢复正常
             this.cameras.main.fadeIn(1000);
             
-            // 2秒后继续显示下一条对话
-            this.time.delayedCall(2000, () => {
+            // 1秒后继续显示下一条对话
+            this.time.delayedCall(1000, () => {
                 this.dialogIndex++;
-                this.isDialogActive = false; // 确保对话状态为未激活
                 this.startDialog();
             });
         });
@@ -292,7 +292,6 @@ export class HerGame extends Phaser.Scene {
                 // 5秒后重新激活me的对话功能
                 this.time.delayedCall(5000, () => {
                     this.meActive = false;
-                    
                     // 重新添加her和me的碰撞检测
                     this.physics.add.overlap(this.her, this.me, this.handleMeEncounter, null, this);
                     
@@ -369,6 +368,7 @@ export class HerGame extends Phaser.Scene {
             delay: dropInterval,
             callback: () => {
                 if (dropCount < totalDrops) {
+                    console.log(dropCount, totalDrops);
                     // 从屏幕上方随机位置掉落
                     const x = Phaser.Math.Between(0, this.sys.game.config.width);
                     const pejoy = pejoyGroup.create(x, -50, 'pejoy');
@@ -377,6 +377,7 @@ export class HerGame extends Phaser.Scene {
                     pejoy.setScale(0.5);
                     dropCount++;
                 } else {
+                    console.log('end',dropCount, totalDrops);
                     dropTimer.remove();
                     
                     // 10秒后切换到新场景
@@ -386,7 +387,7 @@ export class HerGame extends Phaser.Scene {
                 }
             },
             callbackScope: this,
-            repeat: totalDrops - 1
+            repeat: totalDrops
         });
     }
 
